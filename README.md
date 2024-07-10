@@ -1,7 +1,7 @@
 ## Install extension:
 
 ```bash
-git clone https://github.com/AnibalDBXD/discord-fullscreen-extension
+git clone https://github.com/AnibalDBXD/TextToolkitAI
 ```
 Or just download the zip file and extract it.
 
