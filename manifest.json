@@ -1,0 +1,17 @@
+{
+  "name": "TextToolkitAI: Your All-in-One AI Text Assistant",
+  "action": {},
+  "manifest_version": 3,
+  "version": "0.2",
+  "icons": {
+    "16": "/icons/icon16.png",
+    "32": "/icons/icon32.png",
+    "48": "/icons/icon48.png",
+    "192": "/icons/icon192.png"
+  },
+  "description": "Your All-in-One AI Text Assistant",
+  "permissions": ["activeTab", "scripting", "contextMenus"],
+  "background": {
+    "service_worker": "dist/src/service-worker.js"
+  }
+}
