@@ -1,15 +1,19 @@
 import { createOpenAI } from "@ai-sdk/openai";
 import { streamObject } from "ai";
 import { z } from "zod";
+import { getGroqApiKey } from "./apikey-state";
 
-const GROQ_API_KEY = "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"
+const getModel = async () => {
+  const GROQ_API_KEY = await getGroqApiKey()
+  console.log("GROQ_API_KEY", GROQ_API_KEY)
+  const groq = createOpenAI({
+    baseURL: 'https://api.groq.com/openai/v1',
+    apiKey: GROQ_API_KEY,
+  });
 
-const groq = createOpenAI({
-  baseURL: 'https://api.groq.com/openai/v1',
-  apiKey: GROQ_API_KEY,
-});
-
-const model = groq('llama3-70b-8192');
+  const model = groq('llama3-70b-8192');
+  return model
+}
 
 const responseSchema = z.object({
   result_text: z.string().nullable(),
@@ -17,6 +21,7 @@ const responseSchema = z.object({
 })
 
 export const streamAIResponse = async (prompt: string) => {
+  const model = await getModel()
   const { partialObjectStream, object } = await streamObject({
     model,
     temperature: 0.2,

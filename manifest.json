@@ -4,7 +4,7 @@
   "manifest_version": 3,
   "version": "0.2",
   "description": "Your All-in-One AI Text Assistant",
-  "permissions": ["activeTab", "scripting", "contextMenus"],
+  "permissions": ["activeTab", "scripting", "contextMenus", "storage"],
   "content_scripts": [
     {
       "matches": [
