@@ -5,6 +5,16 @@
   "version": "0.2",
   "description": "Your All-in-One AI Text Assistant",
   "permissions": ["activeTab", "scripting", "contextMenus"],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "src/scripts/update-input-content.ts"
+      ]
+    }
+  ],
   "background": {
     "service_worker": "src/service-worker.ts"
   }
