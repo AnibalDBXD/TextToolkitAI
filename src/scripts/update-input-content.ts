@@ -39,7 +39,7 @@ chrome.runtime.onMessage.addListener(async (message: Message, _, sendResponse) =
       const doneInput = searchInputFromValue(message.content || "");
       if (!doneInput) return console.error("Done: No input found with value", message.selectionText);
       setInputLoadingState(doneInput, false);
-      console.error("Done", message.content);
+      console.log("Done", message.content);
       return sendResponse({ success: true });
     }
     if (message.action === "error") {
