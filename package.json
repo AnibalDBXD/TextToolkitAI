@@ -6,8 +6,7 @@
   "scripts": {
     "clear-dist": "rm -rf dist",
     "copy-manifest": "cp manifest.json dist/manifest.json",
-    "build": "tsc && vite build",
-    "dev": "npm run build && vite"
+    "build": "tsc && vite build"
   },
   "author": "AnibalDBXD",
   "license": "ISC",
