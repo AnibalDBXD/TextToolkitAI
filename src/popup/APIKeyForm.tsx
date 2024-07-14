@@ -6,12 +6,8 @@ const APIKeyForm = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(">>> handleSubmit", event);
-    const groqApiKey = ((event.target as HTMLFormElement)[1] as HTMLInputElement).value
-    const groqApiKey2 = (event.target as HTMLFormElement)["groq-api-key"].value
-    console.log(">>> groqApiKey", groqApiKey);
-    console.log(">>> groqApiKey2", groqApiKey2);
-    setGroqApiKey(groqApiKey || groqApiKey2);
+    const groqApiKey = (event.target as HTMLFormElement)["groq-api-key"].value
+    setGroqApiKey(groqApiKey);
     setIsSaved(true);
   };
 

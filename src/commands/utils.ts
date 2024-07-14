@@ -1,5 +1,4 @@
 import { StreamAIResponseReturn } from "../ai";
-
 export interface MessageInput {
   action: "loading" | "stream" | "error" | "done";
   content?: string;
@@ -10,11 +9,11 @@ export interface Message extends MessageInput {
   type: "update-input-content";
 }
 
-const createSendMessage = (tabId: number) => {
+const createSendMessage = async (tabId: number): Promise<(message: MessageInput) => void> => {
   return (message: MessageInput) => chrome.tabs.sendMessage(tabId, {
     ...message,
     type: "update-input-content",
-  });
+  })
 }
 
 interface SendAIResponseToScriptParams {
@@ -24,11 +23,19 @@ interface SendAIResponseToScriptParams {
 }
 
 export const sendAIResponseToScript = async ({
-  response: { partialObjectStream, object },
+  response: { partialObjectStream, object, error },
   selectionText,
   tabId
 }: SendAIResponseToScriptParams) => {
-  const sendMessage = createSendMessage(tabId);
+  const sendMessage = await createSendMessage(tabId);
+  console.log("sendMessage:", sendMessage);
+  if (!partialObjectStream || !object && error) {
+    return sendMessage({
+      action: "error",
+      content: (error as Error).message,
+      selectionText,
+    })
+  }
   console.log("grammar:", "start loading");
   sendMessage({
     action: "loading",
@@ -40,7 +47,7 @@ export const sendAIResponseToScript = async ({
       console.log("grammar:", "error invalid grammar");
       sendMessage({
         action: "error",
-        content: selectionText,
+        content: "invalid grammar",
         selectionText,
       });
       break;

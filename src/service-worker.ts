@@ -46,21 +46,21 @@ const COMMANDS: CommandItem[] = [
   }
 ];
 
-const addCommand = ({ onClick, ...command}: CommandItem, parentId?: string) => {
+const addCommand = ({
+  id,
+  title,
+}: CommandItem, parentId?: string) => {
   chrome.contextMenus.create({
-    ...command,
+    id,
+    title,
     type: 'normal',
     parentId,
     contexts: ['selection'],
   });
-  chrome.contextMenus.onClicked.addListener((OnClickData, tab) => {
-    if (OnClickData.menuItemId !== command.id) return
-    if(!onClick) return
-    onClick(OnClickData, tab)
-  })
 }
 
 chrome.runtime.onInstalled.addListener(async () => {
+  console.log("onInstalled");
   COMMANDS.forEach(({ children, ...command }) => {
     addCommand(command)
     if (children) {
@@ -68,3 +68,10 @@ chrome.runtime.onInstalled.addListener(async () => {
     }
   });
 });
+
+chrome.contextMenus.onClicked.addListener((OnClickData, tab) => {
+  console.log("onClicked", OnClickData);
+  const { onClick } = COMMANDS.find(({ id }) => id === OnClickData.menuItemId) || {};
+  if (!onClick) return
+  onClick(OnClickData, tab)
+})

@@ -33,6 +33,13 @@ const setInputLoadingState = (input: HTMLInputElement | null, loading: boolean) 
   }
 }
 
+const ERRORS_MESSAGES = {
+  "Invalid API Key": "Invalid API key. You can configure your API key in the extension settings.",
+} as Record<string, string>;
+
+console.log(chrome.runtime)
+console.log(chrome.runtime.onMessage)
+
 chrome.runtime.onMessage.addListener(async (message: Message, _, sendResponse) => {
   if (message.type === "update-input-content") {
     if (message.action === "done") {
@@ -48,7 +55,10 @@ chrome.runtime.onMessage.addListener(async (message: Message, _, sendResponse) =
       const selectionInput = searchInputFromValue(message.selectionText);
 
       setInputLoadingState(contentInput || selectionInput, false);
-
+      console.log("error:", message.content);
+      if (message.content !== "invalid grammar") {
+        alert(ERRORS_MESSAGES[message.content as string] || message.content);
+      }
       return sendResponse({ success: false });
     }
     const input = searchInputFromValue(message.selectionText);
@@ -63,3 +73,5 @@ chrome.runtime.onMessage.addListener(async (message: Message, _, sendResponse) =
   }
   sendResponse({ success: true });
 });
+
+chrome.runtime.sendMessage({ type: "script-loaded" });
