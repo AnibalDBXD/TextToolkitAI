@@ -55,3 +55,21 @@ export const translate = (language: string): HandleClickContextMenuEvent => asyn
     tabId: tab?.id,
   });
 }
+
+export const extend: HandleClickContextMenuEvent = async ({ selectionText, editable }, tab) => {
+  console.log({
+    tabId: tab?.id,
+    selectionText,
+    editable,
+  })
+  if (!tab?.id || !selectionText || !editable) return;
+
+  const response = await streamAIResponse(
+    `Extend the following text: ${selectionText}`
+  );
+  await sendAIResponseToScript({
+    response,
+    selectionText,
+    tabId: tab?.id,
+  });
+}

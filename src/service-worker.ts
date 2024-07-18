@@ -1,4 +1,4 @@
-import { grammar, summarize, translate } from "./commands";
+import { extend, grammar, summarize, translate } from "./commands";
 import { HandleClickContextMenuEvent } from "./types";
 interface CommandItem {
   id: string;
@@ -17,6 +17,11 @@ const COMMANDS: CommandItem[] = [
     id: 'summarize',
     title: 'Summarize a text',
     onClick: summarize,
+  },
+  {
+    id: 'extend',
+    title: 'Extend a text',
+    onClick: extend,
   },
   {
     id: 'translate',
