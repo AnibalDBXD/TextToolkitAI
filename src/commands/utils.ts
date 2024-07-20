@@ -22,11 +22,15 @@ interface SendAIResponseToScriptParams {
   response: StreamAIResponseReturn;
 }
 
+interface SendAIResponseToScriptOptions {
+  extend?: boolean;
+}
+
 export const sendAIResponseToScript = async ({
   response: { partialObjectStream, object, error },
   selectionText,
   tabId
-}: SendAIResponseToScriptParams) => {
+}: SendAIResponseToScriptParams, options?: SendAIResponseToScriptOptions) => {
   const sendMessage = await createSendMessage(tabId);
   console.log("sendMessage:", sendMessage);
   if (!partialObjectStream || !object && error) {
@@ -53,18 +57,26 @@ export const sendAIResponseToScript = async ({
       break;
     }
     console.log("grammar:", "stream", partialObject.result_text);
+    let content = partialObject.result_text || "";
+    if(options?.extend) {
+      content = `${selectionText} ${content}`
+    }
     sendMessage({
       action: "stream",
-      content: partialObject.result_text || "",
+      content,
       selectionText,
     });
   }
 
   const resultText = (await object).result_text;
   console.log("grammar:", "done", resultText);
+  let content = resultText || "";
+  if(options?.extend) {
+    content = `${selectionText} ${content}`
+  }
   sendMessage({
     action: "done",
-    content: resultText || "",
+    content,
     selectionText,
   });
 }

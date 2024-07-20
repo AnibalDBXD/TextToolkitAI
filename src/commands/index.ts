@@ -71,5 +71,7 @@ export const extend: HandleClickContextMenuEvent = async ({ selectionText, edita
     response,
     selectionText,
     tabId: tab?.id,
+  }, {
+    extend: true
   });
 }
