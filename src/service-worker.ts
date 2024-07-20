@@ -1,5 +1,7 @@
 import { extend, grammar, summarize, translate } from "./commands";
 import { HandleClickContextMenuEvent } from "./types";
+
+const TEST_FEATURE_PAGES = "https://text-toolkit-ai.vercel.app/"
 interface CommandItem {
   id: string;
   title: string;
@@ -64,8 +66,15 @@ const addCommand = ({
   });
 }
 
+const openTestExtensionPage = () => {
+  chrome.tabs.create({ url: TEST_FEATURE_PAGES }, function () {
+    console.log(`New tab launched with ${TEST_FEATURE_PAGES}`);
+  });
+}
+
 chrome.runtime.onInstalled.addListener(async () => {
   console.log("onInstalled");
+  openTestExtensionPage();
   COMMANDS.forEach(({ children, ...command }) => {
     addCommand(command)
     if (children) {
