@@ -18,13 +18,15 @@ const searchInputFromValue = (value: string) => {
 }
 
 const setInputLoadingState = (input: HTMLInputElement | null, loading: boolean) => {
-  if(!input) return;
+  if(!input) return console.error("setInputLoadingState: No input found");
   // set disabled attribute, and remove it when done
   // animation opacity 0.5 -> 1 infinite, and then remove attribute
   if (loading) {
+    console.log("setInputLoadingState: loading", input.value);
     input.setAttribute("disabled", "disabled");
     input.animate([{ opacity: 0.5 }, { opacity: 1 }], { duration: 1000, iterations: Infinity, direction: "alternate" });
   } else {
+    console.log("setInputLoadingState: false", input.value);
     input.removeAttribute("disabled");
     input.getAnimations().forEach((animation: Animation) => {
       animation.cancel();

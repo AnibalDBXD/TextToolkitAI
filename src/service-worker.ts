@@ -76,7 +76,8 @@ chrome.runtime.onInstalled.addListener(async () => {
 
 chrome.contextMenus.onClicked.addListener((OnClickData, tab) => {
   console.log("onClicked", OnClickData);
-  const { onClick } = COMMANDS.find(({ id }) => id === OnClickData.menuItemId) || {};
+  const allCommands = [...COMMANDS, ...(COMMANDS.flatMap(({ children }) => children || []) || [])];
+  const { onClick } = allCommands.find(({ id }) => id === OnClickData.menuItemId) || {};
   if (!onClick) return
   onClick(OnClickData, tab)
 })
