@@ -11,10 +11,18 @@ const APIKeyForm = () => {
     setIsSaved(true);
   };
 
+  const handleClickHere = () => {
+    chrome.tabs.create({ url: "https://console.groq.com/keys" }, function () {
+      console.log("New tab launched with https://console.groq.com/keys");
+    });
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="groq-api-key">
-        Groq API Key <small>You can get one <a href="https://console.groq.com/keys">here</a></small>
+        Groq API Key <small>You can get one <a
+          style={{ cursor: "pointer" }}
+          onClick={handleClickHere}>here</a></small>
       </label>
       <fieldset role="group">
         <input
