@@ -1,0 +1,64 @@
+---
+const dragonBallText =
+	"Dragon Ball is a Japanese media franchise created by Akira Toriyama in 1984. The initial manga, written and illustrated by Toriyama, was serialized in Weekly Shōnen Jump from 1984 to 1995, with the 519 individual chapters collected in 42 tankōbon volumes by its publisher Shueisha.";
+
+const toEnglishText = "La inteligencia artificial (IA) es un conjunto de tecnologías que permiten que las computadoras realicen una variedad de funciones avanzadas, incluida la capacidad de ver, comprender y traducir lenguaje hablado y escrito, analizar datos, hacer recomendaciones y mucho más.";
+const toSpanishText = "YouTube is an American online video sharing platform owned by Google. Accessible worldwide, YouTube was launched on February 14, 2005, by Steve Chen, Chad Hurley, and Jawed Karim, three former employees of PayPal."
+const toFrenchText = "Twitch is an American video live-streaming service that focuses on video game live streaming, including broadcasts of esports competitions, in addition to offering music broadcasts, creative content, and 'in real life' streams. Twitch is operated by Twitch Interactive, a subsidiary of Amazon."
+const toGermanText =
+	"Vercel Inc., formerly ZEIT, is an American cloud platform as a service company. The company maintains the Next.js web development framework. Vercel's architecture is built around composable architecture, and deployments are handled through Git repositories, the Vercel CLI, or the Vercel REST API.";
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="stylesheet" href="/pico.blue.min.css" />
+		<title>TextToolkitAI</title>
+	</head>
+	<body class="p-8 space-y-2">
+		<h1 class="text-4xl font-bold">TextToolkitAI</h1>
+		<p class="text-xl">A simple AI assistant for your text.</p>
+		<p>This page is for testing the TextToolkitAI features. Feel free to use it to test the features.</p>
+		<div class="md:max-w-screen-lg">
+			<h2 class="mt-8 mb-2 text-2xl font-bold">Features</h2>
+			<ul class="flex flex-col gap-4">
+				<li>
+					<span>Correct the grammar of a text</span>
+					<input
+						type="text"
+						placeholder="Enter text"
+						value="Helo mi frien who are you?"
+					/>
+				</li>
+				<li>
+					<span>Summarize a text</span>
+					<textarea class="px-4 py-3 min-h-32" placeholder="Enter text">{dragonBallText}</textarea>
+				</li>
+				<li>
+					<span>Translate a text to</span>
+					<ul class="ml-6 flex flex-col gap-8">
+						<li>
+							<span>English</span>
+							<textarea class="px-4 py-3 min-h-24" placeholder="Enter text">{toEnglishText}</textarea>
+						</li>
+						<li>
+							<span>Spanish</span>
+							<textarea class="px-4 py-3 min-h-24" placeholder="Enter text">{toSpanishText}</textarea>
+						</li>
+						<li>
+							<span>French</span>
+							<textarea class="px-4 py-3 min-h-24" placeholder="Enter text">{toFrenchText}</textarea>
+						</li>
+						<li>
+							<span>German</span>
+							<textarea class="px-4 py-3 min-h-24" placeholder="Enter text">{toGermanText}</textarea>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</body>
+</html>
