@@ -17,4 +17,4 @@ Open the extension and copy your Groq API key you can get one [here](https://con
 
 Then go to one input field, start typing, select the text, right-click, and search for "TextToolkitAI". Select one of the available options.
 
-![Demo](https://text-toolkit-ai.vercel.app/)
+[Demo](https://text-toolkit-ai.vercel.app/)
