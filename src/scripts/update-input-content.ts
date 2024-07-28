@@ -49,7 +49,8 @@ chrome.runtime.onMessage.addListener(async (message: Message, _, sendResponse) =
       const doneInputs = [...contentInputs, ...selectionInputs];
 
       if (!doneInputs.length) {
-        alert("No input found with value " + message.selectionText);
+        alert(`No input found with value ${message.selectionText} we copy the result to the clipboard`);
+        navigator.clipboard.writeText(message.content || "");
         console.error("Done: No input found with value", message.selectionText);
         return
       }
