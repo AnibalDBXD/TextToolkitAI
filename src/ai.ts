@@ -1,5 +1,5 @@
 import { createOpenAI } from "@ai-sdk/openai";
-import { streamObject } from "ai";
+import { generateObject } from "ai";
 import { z } from "zod";
 import { getGroqApiKey } from "./apikey-state";
 
@@ -19,23 +19,23 @@ const responseSchema = z.object({
   hasValidLanguageSyntax: z.boolean().nullable(),
 })
 
-export const streamAIResponse = async (prompt: string) => {
+export const generateAIResponse = async (prompt: string) => {
   const model = await getModel()
   try {
-    const { partialObjectStream, object } = await streamObject({
+    const { object } = await generateObject({
       model,
       temperature: 0.2,
       prompt,
       system: "Response only with the result_text and hasValidLanguageSyntax properties, and nothing else. If the text is not valid, hasValidLanguageSyntax should be false. Don't translate the result_text.",
       schema: responseSchema,
     })
-    return { partialObjectStream, object }
+    return { object }
   } catch (error) {
-    console.error("streamAIResponse error", error);
+    console.error("generateAIResponse error", error);
     return {
       error
     }
   }
 };
 
-export type StreamAIResponseReturn = Awaited<ReturnType<typeof streamAIResponse>>;
+export type generateAIResponseReturn = Awaited<ReturnType<typeof generateAIResponse>>;
