@@ -22,17 +22,22 @@ const setInputLoadingState = (inputs: HTMLInputElement[], loading: boolean) => {
   // set disabled attribute, and remove it when done
   // animation opacity 0.5 -> 1 infinite, and then remove attribute
   inputs.forEach((input: HTMLInputElement) => {
-    if (loading) {
-      console.log("setInputLoadingState: loading", input.value);
-      input.setAttribute("disabled", "disabled");
-      input.animate([{ opacity: 0.5 }, { opacity: 1 }], { duration: 1000, iterations: Infinity, direction: "alternate" });
-    } else {
-      console.log("setInputLoadingState: false", input.value);
+    const removeAnimations = () => {
       input.removeAttribute("disabled");
       input.getAnimations().forEach((animation: Animation) => {
         animation.cancel();
       });
       input.style.opacity = "1";
+    }
+    if (loading) {
+      console.log("setInputLoadingState: loading", input.value);
+      input.setAttribute("disabled", "disabled");
+      input.animate([{ opacity: 0.5 }, { opacity: 1 }], { duration: 1000, iterations: Infinity, direction: "alternate" });
+      console.log("setInputLoadingState false: timeout");
+      setTimeout(removeAnimations, 2000);
+    } else {
+      console.log("setInputLoadingState: false", input.value);
+      removeAnimations()
     }
   })
 }
@@ -49,9 +54,9 @@ chrome.runtime.onMessage.addListener(async (message: Message, _, sendResponse) =
       const doneInputs = [...contentInputs, ...selectionInputs];
 
       if (!doneInputs.length) {
-        alert(`No input found with value ${message.selectionText} we copy the result to the clipboard`);
+        alert(`No input found, we copy the result to the clipboard`);
         navigator.clipboard.writeText(message.content || "");
-        console.error("Done: No input found with value", message.selectionText);
+        console.error("Done: No input found", message.selectionText);
         return
       }
       setInputLoadingState(doneInputs, false);
